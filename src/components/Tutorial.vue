@@ -40,6 +40,10 @@
         Delete
       </v-btn>
 
+      <v-btn color = "error" small class="mr-2" @click="copyTutorial">
+        Copy
+      </v-btn>
+
       <v-btn color="success" small @click="updateTutorial">
         Update
       </v-btn>
@@ -103,6 +107,22 @@ export default {
         .catch((e) => {
           console.log(e);
         });
+    },
+
+    copyTutorial(){
+      var data = {
+        title: this.currentTutorial.title,
+        description: this.currentTutorial.description,
+      };
+      TutorialDataService.create(data)
+        .then((response) => {
+          console.log(response.data);
+          this.submitted = true;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+
     },
 
     deleteTutorial() {
