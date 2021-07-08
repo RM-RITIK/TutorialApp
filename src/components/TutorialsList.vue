@@ -44,6 +44,7 @@ export default {
     return {
       tutorials: [],
       title: "",
+      token: "",
       headers: [
         { text: "Title", align: "start", sortable: false, value: "title" },
         { text: "Description", value: "description", sortable: false },
@@ -53,7 +54,22 @@ export default {
     };
   },
   methods: {
+    retrieveTutorialsByUser(){
+      const token = localStorage.getItem("token");
+      TutorialDataService.getAllByUser(token)
+        .then((response) =>{
+          this.tutorials = response.data.map(this.getDisplayTutorial);
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+
+    },
     retrieveTutorials() {
+      /*var data = {
+        token: localStorage.getItem("token")
+      };*/
       TutorialDataService.getAll()
         .then((response) => {
           this.tutorials = response.data.map(this.getDisplayTutorial);
@@ -65,7 +81,7 @@ export default {
     },
 
     refreshList() {
-      this.retrieveTutorials();
+      this.retrieveTutorialsByUser();
     },
 
     removeAllTutorials() {
@@ -80,6 +96,9 @@ export default {
     },
 
     searchTitle() {
+      /*var data = {
+        token: localStorage.getItem("token")
+      }*/
       TutorialDataService.findByTitle(this.title)
         .then((response) => {
           this.tutorials = response.data.map(this.getDisplayTutorial);
@@ -114,7 +133,7 @@ export default {
     },
   },
   mounted() {
-    this.retrieveTutorials();
+    this.retrieveTutorialsByUser();
   },
 };
 </script>

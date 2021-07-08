@@ -5,6 +5,10 @@ class TutorialDataService {
     return http.get("/tutorials");
   }
 
+  getAllByUser(token){
+    return http.get(`/tutorials?token=${token}`)
+  }
+
   get(id) {
     return http.get(`/tutorials/${id}`);
   }
