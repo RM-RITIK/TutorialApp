@@ -52,6 +52,7 @@ export default {
         title: "",
         description: "",
         published: false,
+        token: ""
       },
       submitted: false,
     };
@@ -61,6 +62,7 @@ export default {
       var data = {
         title: this.tutorial.title,
         description: this.tutorial.description,
+        token: localStorage.getItem("token")
       };
 
       TutorialDataService.create(data)
