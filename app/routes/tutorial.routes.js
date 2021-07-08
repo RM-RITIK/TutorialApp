@@ -1,7 +1,14 @@
+const { users } = require("../models/index.js");
+
 module.exports = app => {
     const tutorials = require("../controllers/tutorial.controller.js");
-  
+    const users = require("../controllers/user.controller")
+
     var router = require("express").Router();
+
+    router.post("/logIn", users.logIn)
+
+    router.post("/register", users.register)
   
     // Create a new Tutorial
     router.post("/", tutorials.create);
