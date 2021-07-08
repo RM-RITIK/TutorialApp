@@ -50,8 +50,39 @@ exports.create = (req, res) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
+    const token = req.query.token;
     const title = req.query.title;
-    var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
+    console.log(token);
+    var _id = ""
+    if(token){
+      try{
+        const user = jwt.verify(token, JWT_SECRET);
+        _id = user.id
+  
+      }
+      catch(error){
+        console.log(error);
+      }
+
+    }
+    var condition = {};
+    if(token && !title){
+      condition = {
+        user_id: _id
+      }
+    }
+    else if(!token && title){
+      condition = {
+        title: { $regex: new RegExp(title), $options: "i" }
+      }
+    }
+    else{
+      condition = {
+        title: { $regex: new RegExp(title), $options: "i" },
+        user_id: _id
+      }
+    }
+    console.log(condition); 
 
     Tutorial.find(condition)
         .then(data => {
