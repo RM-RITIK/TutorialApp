@@ -1,5 +1,10 @@
 const db = require("../models");
 const Tutorial = db.tutorials;
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const User = db.users;
+
+const JWT_SECRET = 'sdjkfh8923yhjdksbfma@#*(&@*!^#&@bhjb2qiuhesdbhjdsfg839ujkdhfjk'
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
@@ -7,12 +12,25 @@ exports.create = (req, res) => {
         res.status(400).send({ message: "Content can not be empty!" });
         return;
       }
+
+      const token = req.body.token;
+      var _id = ""
+      try{
+        const user = jwt.verify(token, JWT_SECRET);
+        _id = user.id
+
+      }
+      catch(error){
+        console.log(error);
+      }
+
     
       // Create a Tutorial
       const tutorial = new Tutorial({
         title: req.body.title,
         description: req.body.description,
-        published: req.body.published ? req.body.published : false
+        published: req.body.published ? req.body.published : false,
+        user_id: _id
       });
     
       // Save Tutorial in the database
