@@ -6,7 +6,7 @@ class UserDataService {
     }
 
     logIn(data){
-        return http.post("/tutorials/logIn"), data
+        return http.post("/tutorials/logIn", data)
     }
 
 }
