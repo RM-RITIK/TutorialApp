@@ -113,6 +113,7 @@ export default {
       var data = {
         title: this.currentTutorial.title,
         description: this.currentTutorial.description,
+        token: localStorage.getItem("token")
       };
       TutorialDataService.create(data)
         .then((response) => {

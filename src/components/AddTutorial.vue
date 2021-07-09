@@ -17,6 +17,16 @@
           label="Description"
           required
         ></v-text-field>
+
+        <v-text-field
+          v-model="tutorial.image_link"
+          label="Image Link"
+        ></v-text-field>
+
+        <v-text-field
+          v-model="tutorial.purchase_link"
+          label="Purchase Link"
+        ></v-text-field>
       </v-form>
 
       <v-btn color="primary" class="mt-3" @click="saveTutorial">Submit</v-btn>
@@ -52,7 +62,9 @@ export default {
         title: "",
         description: "",
         published: false,
-        token: ""
+        token: "",
+        image_link: "",
+        purchase_link: "",
       },
       submitted: false,
     };
@@ -62,7 +74,9 @@ export default {
       var data = {
         title: this.tutorial.title,
         description: this.tutorial.description,
-        token: localStorage.getItem("token")
+        token: localStorage.getItem("token"),
+        image_link: this.tutorial.image_link,
+        purchase_link: this.tutorial.purchase_link
       };
 
       TutorialDataService.create(data)
