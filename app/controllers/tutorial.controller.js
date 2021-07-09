@@ -30,7 +30,9 @@ exports.create = (req, res) => {
         title: req.body.title,
         description: req.body.description,
         published: req.body.published ? req.body.published : false,
-        user_id: _id
+        user_id: _id,
+        image_link: req.body.image_link,
+        purchase_link: req.body.purchase_link
       });
     
       // Save Tutorial in the database
